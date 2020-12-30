@@ -1,8 +1,9 @@
-package com.devlab74.projectone
+package com.devlab74.projectone.ui.main
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import com.devlab74.projectone.R
 
 class MainFragment : Fragment() {
 
