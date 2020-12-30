@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_get_user_one"
+        android:title="@string/action_get_user_one"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_get_user_two"
+        android:title="@string/action_get_user_two"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_get_user_three"
+        android:title="@string/action_get_user_three"
+        app:showAsAction="never"/>
+    <item android:id="@+id/action_get_blogs"
+        android:title="@string/action_get_blogs"
+        app:showAsAction="never"/>
+</menu>

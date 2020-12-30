@@ -31,4 +31,10 @@
     <string name="blog_posted_on_text">Posted On:</string>
     <string name="blog_reposts_text">Reposts:</string>
     <string name="blog_likes_text">Likes:</string>
+
+    <!-- Menu -->
+    <string name="action_get_user_one">Get User One</string>
+    <string name="action_get_user_two">Get User Two</string>
+    <string name="action_get_user_three">Get User Three</string>
+    <string name="action_get_blogs">Get Blogs</string>
 </resources>
