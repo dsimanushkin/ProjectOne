@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/divider"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/container1"
+            android:orientation="vertical"
+            android:padding="15dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:background="#fff"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:contentDescription="@string/profile_picture_content_description"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/image"
+                android:src="@drawable/blank_profile_picture"
+                android:scaleType="centerCrop"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/full_name_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/full_name_helper_text"
+                app:helperTextTextColor="@color/black">
+
+                <TextView
+                    android:id="@+id/full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="@string/full_name_hint"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/black_transparent_50"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/username_helper_text"
+                app:helperTextTextColor="@color/black">
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:hint="@string/username_hint"
+                    android:textColorHint="@color/black_transparent_50"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/email_helper_text"
+                app:helperTextTextColor="@color/black">
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="@string/email_hint"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/black_transparent_50"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dob_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/dob_helper_text"
+                app:helperTextTextColor="@color/black">
+
+                <TextView
+                    android:id="@+id/dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="@string/dob_hint"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/black_transparent_50"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_date_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperText="@string/registration_date_helper_text"
+                app:helperTextTextColor="@color/black">
+
+                <TextView
+                    android:id="@+id/registration_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="@string/registration_date_hint"
+                    android:textSize="16sp"
+                    android:textColorHint="@color/black_transparent_50"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/container1"
+            app:layout_constraintBottom_toBottomOf="@+id/blogs_count_input_layout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/blogs_count_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:helperText="@string/total_blogs_helper_text"
+            app:helperTextTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintBottom_toBottomOf="@+id/blogs_recycler_view"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <TextView
+                android:id="@+id/blogs_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:hint="@string/total_blogs_date_hint"
+                android:textSize="16sp"
+                android:textColorHint="@color/black_transparent_50"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/blogs_count_input_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/blogs_recycler_view"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginTop="15dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
