@@ -5,7 +5,7 @@ import com.devlab74.projectone.model.UserRequest
 
 data class MainViewState(
 
-    var blogPosts: BlogPostRequest? = null,
-    var user: UserRequest? = null
+    var blogPostRequest: BlogPostRequest? = null,
+    var userRequest: UserRequest? = null
 
 )
