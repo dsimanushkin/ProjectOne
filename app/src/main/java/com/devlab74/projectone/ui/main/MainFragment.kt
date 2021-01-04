@@ -1,16 +1,26 @@
 package com.devlab74.projectone.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.devlab74.projectone.R
+import com.devlab74.projectone.model.UserRequest
+import com.devlab74.projectone.ui.DataStateListener
+import com.devlab74.projectone.ui.main.state.MainStateEvent
+import kotlinx.android.synthetic.main.fragment_main.*
+import java.lang.ClassCastException
 import java.lang.Exception
+import java.text.DateFormat
+import java.util.*
 
 class MainFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
+    lateinit var dataStateHandler: DataStateListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,12 +47,38 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_get_user_one -> triggerGetUserEvent("5fed2bbb266aa227af6839e9")
+            R.id.action_get_user_two -> triggerGetUserEvent("5fed2c2c266aa227af6839ea")
+            R.id.action_get_user_three -> triggerGetUserEvent("5fed2c7e266aa227af6839eb")
+        }
+
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun triggerGetUserEvent(userId: String) {
+        viewModel.setStateEvent(MainStateEvent.GetUserEvent(userId))
     }
 
     private fun subscribeObservers() {
         viewModel.dataState.observe(viewLifecycleOwner, Observer {dataState ->
             println("DEBUG: DataState: ${dataState}")
+
+            dataStateHandler.onDataStateChange(dataState)
+
+            // Handle Data<T>
+            dataState.data?.let { event ->
+                event.getContentIfNotHandled()?.let { mainViewState ->
+                    mainViewState.userRequest?.let { userRequest ->
+                        // Set User Data
+                        viewModel.setUser(userRequest)
+                    }
+
+                    mainViewState.blogPostRequest?.let { blogPostRequest ->
+                        // Set BlogPosts data
+                    }
+                }
+            }
         })
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer {viewState ->
@@ -52,7 +88,37 @@ class MainFragment : Fragment() {
 
             viewState.userRequest?.let {
                 println("DEBUG: Setting user data: ${it}")
+
+                setUserProperties(it)
             }
         })
+    }
+
+    private fun setUserProperties(userRequest: UserRequest) {
+        full_name.text = userRequest.data?.full_name
+        username.text = userRequest.data?.username
+        email.text = userRequest.data?.email
+
+        val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+        val formattedDOB = dateFormat.format(userRequest.data?.dob)
+        val formattedRegistrationDate = dateFormat.format(userRequest.data?.date_created)
+
+        dob.text = formattedDOB
+        registration_date.text = formattedRegistrationDate
+
+        view?.let {
+            Glide.with(it.context)
+                .load(userRequest.data?.profile_image)
+                .into(profile_image)
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            dataStateHandler = context as DataStateListener
+        } catch (e: ClassCastException) {
+            println("DEBUG: $context must implement DataStateListener")
+        }
     }
 }
