@@ -19,7 +19,7 @@ data class BlogPostRequest(
 
     @Expose
     @SerializedName("data")
-    var data: BlogPost? = null
+    var data: List<BlogPost>? = null
 
 ) {
 

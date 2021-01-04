@@ -15,8 +15,10 @@ object Repository {
         return object : NetworkBoundResource<BlogPostRequest, MainViewState>() {
             override fun handleApiSuccessResponse(response: ApiSuccessResponse<BlogPostRequest>) {
                 result.value = DataState.data(
+                    message = null,
                     data = MainViewState(
-                        blogPostRequest = response.body
+                        blogPostRequest = response.body,
+                        userRequest = null
                     )
                 )
             }
@@ -32,7 +34,9 @@ object Repository {
         return object : NetworkBoundResource<UserRequest, MainViewState>() {
             override fun handleApiSuccessResponse(response: ApiSuccessResponse<UserRequest>) {
                 result.value = DataState.data(
+                    message = null,
                     data = MainViewState(
+                        blogPostRequest = null,
                         userRequest = response.body
                     )
                 )
