@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.devlab74.projectone.R
+import com.devlab74.projectone.databinding.FragmentMainBinding
 import com.devlab74.projectone.model.BlogPost
 import com.devlab74.projectone.model.BlogPostRequest
 import com.devlab74.projectone.model.UserRequest
@@ -22,6 +23,9 @@ import java.text.DateFormat
 import java.util.*
 
 class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
+
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onItemSelected(position: Int, item: BlogPost) {
         println("DEBUG: CLICKED ${position}")
@@ -37,7 +41,9 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,7 +122,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     }
 
     private fun initRecyclerView() {
-        blogs_recycler_view.apply {
+        binding.blogsRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainFragment.context)
             val topSpacingItemDecoration = TopSpacingItemDecoration(30)
             addItemDecoration(topSpacingItemDecoration)
@@ -126,26 +132,27 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     }
 
     private fun setUserProperties(userRequest: UserRequest) {
-        full_name.text = userRequest.data?.full_name
-        username.text = userRequest.data?.username
-        email.text = userRequest.data?.email
+
+        binding.fullName.text = userRequest.data?.full_name
+        binding.username.text = userRequest.data?.username
+        binding.email.text = userRequest.data?.email
 
         val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
-        val formattedDOB = dateFormat.format(userRequest.data?.dob)
-        val formattedRegistrationDate = dateFormat.format(userRequest.data?.date_created)
+        val formattedDOB = dateFormat.format(userRequest.data?.dob!!)
+        val formattedRegistrationDate = dateFormat.format(userRequest.data?.date_created!!)
 
-        dob.text = formattedDOB
-        registration_date.text = formattedRegistrationDate
+        binding.dob.text = formattedDOB
+        binding.registrationDate.text = formattedRegistrationDate
 
         view?.let {
             Glide.with(it.context)
                 .load(userRequest.data?.profile_image)
-                .into(profile_image)
+                .into(binding.profileImage)
         }
     }
 
     private fun setBlogPostProperties(blogPostRequest: BlogPostRequest) {
-        blogs_count.text = blogPostRequest.blog_posts_total.toString()
+        binding.blogsCount.text = blogPostRequest.blog_posts_total.toString()
         blogPostRequest.data?.let {
             mainRecyclerAdapter.submitList(it)
         }

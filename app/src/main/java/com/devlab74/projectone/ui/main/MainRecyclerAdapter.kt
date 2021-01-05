@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.devlab74.projectone.R
+import com.devlab74.projectone.databinding.LayoutBlogListItemBinding
 import com.devlab74.projectone.model.BlogPost
 import kotlinx.android.synthetic.main.layout_blog_list_item.view.*
 import java.text.DateFormat
@@ -32,13 +33,10 @@ class MainRecyclerAdapter(private val interaction: Interaction? = null) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding = LayoutBlogListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return BlogPostViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_blog_list_item,
-                parent,
-                false
-            ),
+            binding,
             interaction
         )
     }
@@ -61,33 +59,33 @@ class MainRecyclerAdapter(private val interaction: Interaction? = null) :
 
     class BlogPostViewHolder
     constructor(
-        itemView: View,
+        private val binding: LayoutBlogListItemBinding,
         private val interaction: Interaction?
-    ) : RecyclerView.ViewHolder(itemView) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: BlogPost) = with(itemView) {
-            itemView.setOnClickListener {
+        fun bind(item: BlogPost) = with(binding) {
+            binding.root.setOnClickListener {
                 interaction?.onItemSelected(adapterPosition, item)
             }
 
             // need to shrink images b/c they are very high resolution
             val requestOptions = RequestOptions
                 .overrideOf(1920, 1080)
-            Glide.with(itemView.context)
+            Glide.with(binding.root.context)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(item.blog_image)
-                .into(itemView.blog_image)
+                .into(binding.blogImage)
 
-            itemView.blog_title.text = item.title
-            itemView.blog_body.text = item.body
-            itemView.posted_by.text = item.posted_by
+            binding.blogTitle.text = item.title
+            binding.blogBody.text = item.body
+            binding.postedBy.text = item.posted_by
 
             val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
-            val formattedPostedOn = dateFormat.format(item.date_posted)
-            itemView.posted_on.text = formattedPostedOn
+            val formattedPostedOn = dateFormat.format(item.date_posted!!)
+            binding.postedOn.text = formattedPostedOn
 
-            itemView.reposts_count.text = item.reposts_count.toString()
-            itemView.likes_count.text = item.likes_count.toString()
+            binding.repostsCount.text = item.reposts_count.toString()
+            binding.likesCount.text = item.likes_count.toString()
         }
     }
 
