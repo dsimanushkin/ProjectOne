@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), DataStateListener {
     private fun showMainFragment() {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.fragment_container,
+                binding.fragmentContainer.id,
                 MainFragment(), "Main Fragment")
             .commit()
     }
