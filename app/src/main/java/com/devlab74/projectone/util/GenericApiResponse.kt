@@ -2,6 +2,7 @@ package com.devlab74.projectone.util
 
 import android.util.Log
 import retrofit2.Response
+import timber.log.Timber
 
 /**
  * Copied from Architecture components google sample:
@@ -11,8 +12,6 @@ import retrofit2.Response
 sealed class GenericApiResponse<T> {
 
     companion object {
-        private const val TAG: String = "AppDebug"
-
 
         fun <T> create(error: Throwable): ApiErrorResponse<T> {
             return ApiErrorResponse(error.message ?: "unknown error")
@@ -20,10 +19,10 @@ sealed class GenericApiResponse<T> {
 
         fun <T> create(response: Response<T>): GenericApiResponse<T> {
 
-            Log.d(TAG, "GenericApiResponse: response: $response")
-            Log.d(TAG, "GenericApiResponse: raw: ${response.raw()}")
-            Log.d(TAG, "GenericApiResponse: headers: ${response.headers()}")
-            Log.d(TAG, "GenericApiResponse: message: ${response.message()}")
+            Timber.d("GenericApiResponse: response: $response")
+            Timber.d("GenericApiResponse: raw: ${response.raw()}")
+            Timber.d("GenericApiResponse: headers: ${response.headers()}")
+            Timber.d("GenericApiResponse: message: ${response.message()}")
 
             val responseType: GenericApiResponse<T>
 

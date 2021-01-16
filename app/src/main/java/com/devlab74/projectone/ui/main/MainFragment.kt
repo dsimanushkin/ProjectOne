@@ -16,6 +16,7 @@ import com.devlab74.projectone.model.UserRequest
 import com.devlab74.projectone.ui.DataStateListener
 import com.devlab74.projectone.ui.main.state.MainStateEvent
 import com.devlab74.projectone.util.TopSpacingItemDecoration
+import timber.log.Timber
 import java.lang.ClassCastException
 import java.lang.Exception
 import java.text.DateFormat
@@ -27,8 +28,8 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     private val binding get() = _binding!!
 
     override fun onItemSelected(position: Int, item: BlogPost) {
-        println("DEBUG: CLICKED $position")
-        println("DEBUG: CLICKED $item")
+        Timber.d("DEBUG: CLICKED $position")
+        Timber.d("DEBUG: CLICKED $item")
     }
 
     private lateinit var viewModel: MainViewModel
@@ -89,7 +90,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
             // Handle Data<T>
             dataState.data?.let { event ->
                 event.getContentIfNotHandled()?.let { mainViewState ->
-                    println("DEBUG: DataState: $mainViewState")
+                    Timber.d("DEBUG: DataState: $mainViewState")
 
                     mainViewState.userRequest?.let { userRequest ->
                         // Set User Data
@@ -106,13 +107,13 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer {viewState ->
             viewState.blogPostRequest?.let {
-                println("DEBUG: Setting blog posts to RecyclerView: $it")
+                Timber.d("DEBUG: Setting blog posts to RecyclerView: $it")
 
                 setBlogPostProperties(it)
             }
 
             viewState.userRequest?.let {
-                println("DEBUG: Setting user data: $it")
+                Timber.d("DEBUG: Setting user data: $it")
 
                 setUserProperties(it)
             }
@@ -161,7 +162,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
         try {
             dataStateHandler = context as DataStateListener
         } catch (e: ClassCastException) {
-            println("DEBUG: $context must implement DataStateListener")
+            Timber.d("DEBUG: $context must implement DataStateListener")
         }
     }
 }

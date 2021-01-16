@@ -1,13 +1,17 @@
 package com.devlab74.projectone.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.devlab74.projectone.BuildConfig
 import com.devlab74.projectone.databinding.ActivityMainBinding
 import com.devlab74.projectone.ui.DataStateListener
 import com.devlab74.projectone.util.DataState
+import timber.log.Timber
+import timber.log.Timber.DebugTree
+
 
 class MainActivity : AppCompatActivity(), DataStateListener {
 
@@ -19,6 +23,10 @@ class MainActivity : AppCompatActivity(), DataStateListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

@@ -10,8 +10,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 abstract class NetworkBoundResource<ResponseObject, ViewStateType> {
+
     protected val result = MediatorLiveData<DataState<ViewStateType>>()
 
     init {
@@ -38,11 +40,11 @@ abstract class NetworkBoundResource<ResponseObject, ViewStateType> {
                 handleApiSuccessResponse(response)
             }
             is ApiErrorResponse -> {
-                println("DEBUG: NetworkBoundResource: ${response.errorMessage}")
+                Timber.d("DEBUG: NetworkBoundResource: ${response.errorMessage}")
                 onReturnError(response.errorMessage)
             }
             is ApiEmptyResponse -> {
-                println("DEBUG: NetworkBoundResource: HTTP 204. Returned nothing!")
+                Timber.d("DEBUG: NetworkBoundResource: HTTP 204. Returned nothing!")
                 onReturnError("HTTP 204. Returned nothing!")
             }
         }

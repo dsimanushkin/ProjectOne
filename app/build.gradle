@@ -85,4 +85,9 @@ dependencies {
     // -- Leak Canary (detecting memory leaks)
     def leak_canary_version = "2.0-alpha-3"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+
+    // -- Timber
+    def timber_version = "4.7.1"
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
 }
