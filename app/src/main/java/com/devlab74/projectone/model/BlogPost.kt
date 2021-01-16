@@ -1,42 +1,35 @@
 package com.devlab74.projectone.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class BlogPost(
 
-    @Expose
-    @SerializedName("_id")
-    var _id: String? = null,
+    @Json(name = "_id")
+    var userId: String? = null,
 
-    @Expose
-    @SerializedName("blog_image")
-    var blog_image: String? = null,
+    @Json(name = "blog_image")
+    var blogImage: String? = null,
 
-    @Expose
-    @SerializedName("title")
+    @Json(name = "title")
     var title: String? = null,
 
-    @Expose
-    @SerializedName("body")
+    @Json(name = "body")
     var body: String? = null,
 
-    @Expose
-    @SerializedName("posted_by")
-    var posted_by: String? = null,
+    @Json(name = "posted_by")
+    var postedBy: String? = null,
 
-    @Expose
-    @SerializedName("date_posted")
-    var date_posted: Date? = null,
+    @Json(name = "date_posted")
+    var datePosted: Date? = null,
 
-    @Expose
-    @SerializedName("reposts_count")
-    var reposts_count: Int? = null,
+    @Json(name = "reposts_count")
+    var repostsCount: Int? = null,
 
-    @Expose
-    @SerializedName("likes_count")
-    var likes_count: Int? = null
+    @Json(name = "likes_count")
+    var likesCount: Int? = null
 
 ) {
     override fun equals(other: Any?): Boolean {
@@ -47,14 +40,10 @@ data class BlogPost(
 
         other as BlogPost
 
-        if (_id != other._id) {
+        if (userId != other.userId) {
             return false
         }
 
         return true
-    }
-
-    override fun toString(): String {
-        return "BlogPost(blog_image=$blog_image, title=$title, body=$body, posted_by=$posted_by, date_posted=$date_posted, reposts_count=$reposts_count, likes_count=$likes_count)"
     }
 }

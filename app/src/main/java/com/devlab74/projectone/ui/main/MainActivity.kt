@@ -5,23 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.devlab74.projectone.R
 import com.devlab74.projectone.databinding.ActivityMainBinding
 import com.devlab74.projectone.ui.DataStateListener
 import com.devlab74.projectone.util.DataState
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), DataStateListener {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

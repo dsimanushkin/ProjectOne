@@ -28,15 +28,15 @@ class MainViewModel : ViewModel() {
         }
 
     private fun handleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
-        when(stateEvent) {
+        return when(stateEvent) {
             is MainStateEvent.GetBlogPostsEvent -> {
-                return Repository.getBlogPosts()
+                Repository.getBlogPosts()
             }
             is MainStateEvent.GetUserEvent -> {
-                return Repository.getUser(stateEvent.userId)
+                Repository.getUser(stateEvent.userId)
             }
             is MainStateEvent.None -> {
-                return AbsentLiveData.create()
+                AbsentLiveData.create()
             }
         }
     }
@@ -54,10 +54,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getCurrentStateOrNew(): MainViewState {
-        val value = viewState.value?.let {
-            it
-        }?: MainViewState()
-        return value
+        return viewState.value ?: MainViewState()
     }
 
     fun setStateEvent(event: MainStateEvent) {

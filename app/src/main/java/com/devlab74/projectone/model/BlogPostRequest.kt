@@ -1,30 +1,21 @@
 package com.devlab74.projectone.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class BlogPostRequest(
 
-    @Expose
-    @SerializedName("status")
+    @Json(name = "status")
     var status: String? = null,
 
-    @Expose
-    @SerializedName("message")
+    @Json(name = "message")
     var message: String? = null,
 
-    @Expose
-    @SerializedName("blog_posts_total")
-    var blog_posts_total: Int? = null,
+    @Json(name = "blog_posts_total")
+    var blogPostsTotal: Int? = null,
 
-    @Expose
-    @SerializedName("data")
+    @Json(name = "data")
     var data: List<BlogPost>? = null
 
-) {
-
-    override fun toString(): String {
-        return "BlogPostRequest(status=$status, message=$message, blog_posts_total=$blog_posts_total, data=$data)"
-    }
-
-}
+)

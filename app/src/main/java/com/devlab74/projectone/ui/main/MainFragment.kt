@@ -16,7 +16,6 @@ import com.devlab74.projectone.model.UserRequest
 import com.devlab74.projectone.ui.DataStateListener
 import com.devlab74.projectone.ui.main.state.MainStateEvent
 import com.devlab74.projectone.util.TopSpacingItemDecoration
-import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.ClassCastException
 import java.lang.Exception
 import java.text.DateFormat
@@ -28,13 +27,13 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
     private val binding get() = _binding!!
 
     override fun onItemSelected(position: Int, item: BlogPost) {
-        println("DEBUG: CLICKED ${position}")
-        println("DEBUG: CLICKED ${item}")
+        println("DEBUG: CLICKED $position")
+        println("DEBUG: CLICKED $item")
     }
 
-    lateinit var viewModel: MainViewModel
-    lateinit var dataStateHandler: DataStateListener
-    lateinit var mainRecyclerAdapter: MainRecyclerAdapter
+    private lateinit var viewModel: MainViewModel
+    private lateinit var dataStateHandler: DataStateListener
+    private lateinit var mainRecyclerAdapter: MainRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +41,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,7 +89,7 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
             // Handle Data<T>
             dataState.data?.let { event ->
                 event.getContentIfNotHandled()?.let { mainViewState ->
-                    println("DEBUG: DataState: ${mainViewState}")
+                    println("DEBUG: DataState: $mainViewState")
 
                     mainViewState.userRequest?.let { userRequest ->
                         // Set User Data
@@ -108,13 +106,13 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer {viewState ->
             viewState.blogPostRequest?.let {
-                println("DEBUG: Setting blog posts to RecyclerView: ${it}")
+                println("DEBUG: Setting blog posts to RecyclerView: $it")
 
                 setBlogPostProperties(it)
             }
 
             viewState.userRequest?.let {
-                println("DEBUG: Setting user data: ${it}")
+                println("DEBUG: Setting user data: $it")
 
                 setUserProperties(it)
             }
@@ -133,26 +131,26 @@ class MainFragment : Fragment(), MainRecyclerAdapter.Interaction {
 
     private fun setUserProperties(userRequest: UserRequest) {
 
-        binding.fullName.text = userRequest.data?.full_name
+        binding.fullName.text = userRequest.data?.fullName
         binding.username.text = userRequest.data?.username
         binding.email.text = userRequest.data?.email
 
         val dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
         val formattedDOB = dateFormat.format(userRequest.data?.dob!!)
-        val formattedRegistrationDate = dateFormat.format(userRequest.data?.date_created!!)
+        val formattedRegistrationDate = dateFormat.format(userRequest.data?.dateCreated!!)
 
         binding.dob.text = formattedDOB
         binding.registrationDate.text = formattedRegistrationDate
 
         view?.let {
             Glide.with(it.context)
-                .load(userRequest.data?.profile_image)
+                .load(userRequest.data?.profileImage)
                 .into(binding.profileImage)
         }
     }
 
     private fun setBlogPostProperties(blogPostRequest: BlogPostRequest) {
-        binding.blogsCount.text = blogPostRequest.blog_posts_total.toString()
+        binding.blogsCount.text = blogPostRequest.blogPostsTotal.toString()
         blogPostRequest.data?.let {
             mainRecyclerAdapter.submitList(it)
         }

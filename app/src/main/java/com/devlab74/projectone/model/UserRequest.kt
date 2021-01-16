@@ -1,25 +1,18 @@
 package com.devlab74.projectone.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class UserRequest(
 
-    @Expose
-    @SerializedName("status")
+    @Json(name = "status")
     var status: String? = null,
 
-    @Expose
-    @SerializedName("message")
+    @Json(name = "message")
     var message: String? = null,
 
-    @Expose
-    @SerializedName("data")
+    @Json(name = "data")
     var data: User? = null
 
-) {
-
-    override fun toString(): String {
-        return "UserRequest(status=$status, message=$message, data=$data)"
-    }
-}
+)
